@@ -1,40 +1,65 @@
-<<<<<<< HEAD
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# BidBuddy — Online Bidding Application
+
+A full-stack real-time auction/bidding platform built with Next.js, where users can list items, place bids, and get notified as auctions progress.
+
+> Note: this README is written from the project's dependencies and configuration (`package.json`, `docker-compose.yml`, `drizzle.config.ts`). If any feature below isn't wired up yet, treat it as the intended scope.
+
+## Tech Stack
+
+- **Next.js 14** (App Router) + **TypeScript**
+- **Tailwind CSS** with `tailwindcss-animate` and `class-variance-authority` for component styling
+- **Drizzle ORM** + **PostgreSQL** for data (schema-first, type-safe queries)
+- **NextAuth** (`@auth/drizzle-adapter`) for authentication
+- **AWS S3** (`@aws-sdk/client-s3`, presigned URLs) for image uploads — e.g. item listing photos
+- **Knock** (`@knocklabs/react`, `@knocklabs/node`) for real-time in-app notifications — e.g. outbid alerts
+- **Docker Compose** for local development (containerized Postgres/app)
+
+## Features
+
+- User authentication and sessions via NextAuth
+- Create and browse item listings with image uploads to S3
+- Place bids on active listings, backed by a PostgreSQL schema managed with Drizzle
+- Real-time notifications (e.g. when you're outbid) via Knock
+- Fully typed end-to-end with TypeScript and Drizzle's schema inference
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Set up your environment variables (database URL, AWS credentials, NextAuth secret, Knock API key) in `.env`, then:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Push the Drizzle schema to your database
+npm run db:push
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+# Run the dev server
+npm run dev
+```
 
-## Learn More
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-To learn more about Next.js, take a look at the following resources:
+Alternatively, spin up the full stack with Docker:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+docker-compose up
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Useful scripts
 
-## Deploy on Vercel
+| Command | Purpose |
+|---|---|
+| `npm run dev` | Start the Next.js dev server |
+| `npm run build` | Production build |
+| `npm run db:push` | Push Drizzle schema changes to the database |
+| `npm run db:studio` | Open Drizzle Studio to inspect the database |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-=======
-# bidding-application
->>>>>>> 82168e44905fa12e773d93f69c3136487bd89a63
+```
+src/           # Application source (routes, components, server logic)
+public/        # Static assets
+drizzle.config.ts   # Drizzle ORM configuration
+docker-compose.yml  # Local dev environment
+```
